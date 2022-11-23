@@ -5,13 +5,23 @@ import pausa from './helpers/helpers.js'; */
 const { inquirerMenu,
          pausa,
          leerInput } = require('./helpers/inquirer');
+const { saveDB, readDB } = require('./helpers/saveFile');
 const Tareas = require('./models/tareas');
 
 
 const main = async()=>{
-    console.log('Hola mundo!');
+
     let opt='';
+
     const tareas = new Tareas();
+    
+    const tareasDB = readDB();
+    
+    if (tareasDB){
+        //Establecer las tareas
+    }
+    await pausa() ;
+
     do {
        opt= await inquirerMenu();
        switch (opt) {
@@ -21,10 +31,12 @@ const main = async()=>{
                 tareas.crearTareas(desc);
             break;
         case '2':
-               console.log(tareas.listadoArr);
+               console.log(readFile);
             break;
       
        }
+
+       saveDB( tareas.listadoArr);
 
        await pausa() ;
         

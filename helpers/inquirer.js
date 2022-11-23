@@ -17,7 +17,7 @@ const menuOpts= [
         },    
         {
             value: '3',
-            name: `${'3'.green}.Listar tareas completadas`
+            name: `${'3'.green}. Listar tareas completadas`
         },    
         {
             value: '4',
@@ -40,7 +40,7 @@ const menuOpts= [
 ];
 
 const inquirerMenu = async () => {
-    console.clear();
+    //console.clear();
     console.log('==========================='.green);
     console.log('   Seleccione una opción'.white);
     console.log('===========================\n'.green);
