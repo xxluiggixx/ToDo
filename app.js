@@ -4,7 +4,10 @@ import pausa from './helpers/helpers.js'; */
 //const pausa = require('./helpers/helpers');
 const { inquirerMenu,
          pausa,
-         leerInput } = require('./helpers/inquirer');
+         leerInput,
+         listadoTareasBorrar,
+         confirmar,
+         mostrarListadoCheckList } = require('./helpers/inquirer');
 const { saveDB, readDB } = require('./helpers/saveFile');
 const Tareas = require('./models/tareas');
 
@@ -18,9 +21,9 @@ const main = async()=>{
     const tareasDB = readDB();
     
     if (tareasDB){
-        //Establecer las tareas
+        tareas.cargarTareasFromArray(tareasDB);
     }
-    await pausa() ;
+    //await pausa() ;
 
     do {
        opt= await inquirerMenu();
@@ -31,7 +34,26 @@ const main = async()=>{
                 tareas.crearTareas(desc);
             break;
         case '2':
-               console.log(readFile);
+            tareas.listadoCompleto();
+            break;
+        case '3':
+            tareas.listarPendientesCompletadas(true);
+            break;
+        case '4':
+            tareas.listarPendientesCompletadas(false);
+            break;
+        case '5':
+            const ids = await mostrarListadoCheckList(tareas.listadoArr);
+            tareas.toggleCompletadas( ids );
+            break;
+        case '6':
+            const id = await listadoTareasBorrar( tareas.listadoArr );
+            if (id !== '0'){
+                const confirm = await confirmar('Are you sure??');
+                if (confirm){
+                    tareas.borrarTarea( id);
+                }
+            }
             break;
       
        }
